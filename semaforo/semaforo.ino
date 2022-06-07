@@ -4,6 +4,9 @@ LED ledVermelho(11);
 LED ledAmarelo(12);
 LED ledVerde(13);
 
+LED ledVerdePedestre(10);
+LED ledVermelhoPedestre(9);
+
 void setup() {
   Serial.begin(9600);
 }
@@ -17,8 +20,33 @@ void loop() {
 
 }
 
+void piscarAmarelo(int intervalo, int quantidade)
+{
+  for (int i = 0; i <= quantidade; i++) {
+    ledAmarelo.turnON();
+    delay(intervalo);
+    ledAmarelo.turnOFF();
+    delay(intervalo);
+  }
+  
+}
+
+void abrirSinalPedestre()
+{
+  ledVermelhoPedestre.turnOFF();
+  ledVerdePedestre.turnON();
+}
+
+void fecharSinalPedestre()
+{
+  ledVermelhoPedestre.turnON();
+  ledVerdePedestre.turnOFF();
+}
+
 void abrirSinal()
 {
+  fecharSinalPedestre();
+  
   ledVerde.turnON();
   ledAmarelo.turnOFF();
   ledVermelho.turnOFF();
@@ -28,12 +56,9 @@ void fecharSinal()
 {
   ledVerde.turnOFF();
   
-  for (int i = 0; i <= 10; i++) {
-    ledAmarelo.turnON();
-    delay(500);
-    ledAmarelo.turnOFF();
-    delay(500);
-  }
-  
+  piscarAmarelo(500, 5);
+
   ledVermelho.turnON();
+
+  abrirSinalPedestre();
 }
